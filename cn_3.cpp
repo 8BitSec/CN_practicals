@@ -21,8 +21,6 @@ class timer {
 };
 int main()
 {
-
-  cout<<setw(50)<<setfill('*')<<" Welcome to Darkness "<<setw(30)<<setfill('*')<<" ";
 int frames[] = {1,2,3,4,5,6,7,8,9,10};
 unsigned long seconds = 5;
 srand(time(NULL));
