@@ -1,222 +1,87 @@
-#include<stdio.h>
+#include<iostream>
+using namespace std;
+
+#define P1 0
+#define P2 1
+#define P3 3
 
 int main()
 {
-	int choice;
-	int i;
+	int i, choice;
+	int code[7] = {0}, r_msg[7]={0};
+	string message;
 
-	int arr[7];
-    printf("\n\nEnter the message (in binary): ");
-    for(i=0;i<4;i++)	scanf("%d",&arr[i]);
-    
-	printf("\nMessage entered is: ");
-    for(i=0;i<4;i++)	printf("%d",arr[i]);
-	
-	int temp;
-    temp=arr[2];
-    arr[2]=arr[0];
-    arr[4]=arr[1];
-    arr[5]=temp;
-    arr[6]=arr[3];
+	do{
+		cout << "\nEnter the message bits in binary to be sent (4 bits): ";
+		cin >> message;
 
-	printf("\n\nWant to calculate in odd or even parity: ");
-	printf("\n1. Even Parity.");
-	printf("\n2. Odd Parity.");
-	printf("\nEnter your choice :");	scanf("%d",&choice);
+		code[2] = message[0] - 48;
+		code[4] = message[1] - 48;
+		code[5] = message[2] - 48;
+		code[6] = message[3] - 48;
+		
+		for(i=0;i<7;i++)	if( code[i]!=0 && code[i]!=1 )	break;
+	}	while( i < 7 );
 
-	if(choice==1)
-{
+	cout << "\nAvailable modes:\n\t1. EVEN PARITY\n\t2. ODD PARITY";
+	cout << "\nEnter your choice: ";
+	cin >> choice;
 
-printf("\nP1 parity bit is: ");
-{
-if( (arr[2]==0 && arr[4]==0 && arr[6]==0) ||
-	(arr[2]==0 && arr[4]==1 && arr[6]==1) ||
-	(arr[2]==1 && arr[4]==1 && arr[6]==0) ||
-	(arr[2]==1 && arr[4]==0 && arr[6]==1))
-        { printf("0"); arr[0]=0;}
-else
-        { printf("1"); arr[0]=1;}
- }
+	code[P1] = code[2] ^ code[4] ^ code[6];
+	code[P2] = code[2] ^ code[5] ^ code[6];
+	code[P3] = code[4] ^ code[5] ^ code[6]; 
 
-printf("\nP2 parity bit is: ");
-{
-if((arr[2]==0 && arr[5]==0 && arr[6]==0) ||
-   (arr[2]==0 && arr[5]==1 && arr[6]==1) ||
-   (arr[2]==1 && arr[5]==1 && arr[6]==0) ||
-   (arr[2]==1 && arr[5]==0 && arr[6]==1))
-	{printf("0"); arr[1]=0;}
-else
-	{printf("1"); arr[1]=1;}
- }
-
-printf("\nP3 parity bit is: ");
-{
-if((arr[4]==0 && arr[5]==0 && arr[6]==0) ||
-   (arr[4]==0 && arr[5]==1 && arr[6]==1) ||
-   (arr[4]==1 && arr[5]==1 && arr[6]==0) ||
-   (arr[4]==1 && arr[5]==0 && arr[6]==1))
-  { printf("0"); arr[3]=0;}
-else
-  { printf("1"); arr[3]=1;}
-}
-
-printf("\n\nMessage after parity bits will be: ");
-for(i=0;i<7;i++)	printf("%d ",arr[i]);
-
-}
-
-if(choice==2)
-{
-  printf("\nP1 parity bit is: ");
-  {
-  if( (arr[2]==0 && arr[4]==0 && arr[6]==0) ||
-  	(arr[2]==0 && arr[4]==1 && arr[6]==1) ||
-  	(arr[2]==1 && arr[4]==1 && arr[6]==0) ||
-  	(arr[2]==1 && arr[4]==0 && arr[6]==1))
-          { printf("1"); arr[0]=1;}
-  else
-          { printf("0"); arr[0]=0;}
-   }
-
-  printf("\nP2 parity bit is: ");
-  {
-  if((arr[2]==0 && arr[5]==0 && arr[6]==0) ||
-     (arr[2]==0 && arr[5]==1 && arr[6]==1) ||
-     (arr[2]==1 && arr[5]==1 && arr[6]==0) ||
-     (arr[2]==1 && arr[5]==0 && arr[6]==1))
-  	{printf("1"); arr[1]=1;}
-  else
-  	{printf("0"); arr[1]=0;}
-   }
-
-  printf("\nP3 parity bit is: ");
-  {
-  if((arr[4]==0 && arr[5]==0 && arr[6]==0) ||
-     (arr[4]==0 && arr[5]==1 && arr[6]==1) ||
-     (arr[4]==1 && arr[5]==1 && arr[6]==0) ||
-     (arr[4]==1 && arr[5]==0 && arr[6]==1))
-    { printf("1"); arr[3]=1;}
-  else
-    { printf("0"); arr[3]=0;}
-  }
-  printf("\n\nMessage after parity bits will be: ");
-  for(i=0;i<7;i++)	printf("%d ", arr[i]);
-}
-
-printf("\n\nEnter the transmitted message: ");
-for(i=0;i<7;i++)	scanf("%d", &arr[i]);
-
-printf("\nTransmitted message is: ");
-printf("\nTransmitted message is: ");
-for(i=0;i<7;i++)	printf("%d ",arr[i]);
-
-    printf("\n\nWant to correct the message in odd or even parity: ");
-    printf("\n1. Even Parity.");
-    printf("\n2. Odd Parity.");
-    printf("\nEnter your choice: ");
-    scanf("%d",&choice);
-
-	if(choice==1)
+	if( choice == 2 )
 	{
+		code[P1] = !code[P1];
+		code[P2] = !code[P2];
+		code[P3] = !code[P3];
+	}
+	
+	cout << "\nThe Hamming code for given message is: ";
+	for(i=0;i<7;i++)	cout << code[i];
 
-	  printf("\nE3 parity bit is: ");
-	  {
-	      if(      (arr[3]==0 && arr[4]==0 && arr[5]==0 && arr[6]==0) ||
-	               (arr[3]==0 && arr[4]==1 && arr[5]==1 && arr[6]==0) ||
-	               (arr[3]==1 && arr[4]==0 && arr[5]==1 && arr[6]==0) ||
-	               (arr[3]==1 && arr[4]==1 && arr[5]==0 && arr[6]==0) ||
-	               (arr[3]==0 && arr[4]==0 && arr[5]==1 && arr[6]==1) ||
-	               (arr[3]==0 && arr[4]==1 && arr[5]==0 && arr[6]==1) ||
-	               (arr[3]==1 && arr[4]==0 && arr[5]==0 && arr[6]==1) ||
-	               (arr[3]==1 && arr[4]==1 && arr[5]==1 && arr[6]==1)
-	          )
-	    { printf("0"); arr[3]=0; }
-	  else
-	    { printf("1"); arr[3]=1; }
-	  }
+	cout << "\nParity bits are:\tP1="<<code[P1]<<"\tP2="<<code[P2]<<"\tP3="<<code[P3];
 
-	  printf("\nE2 parity bit is: ");
-	  {
-	  if((arr[1]==0 && arr[2]==0 && arr[5]==0 && arr[6]==0) ||
-	     (arr[1]==0 && arr[2]==1 && arr[5]==1 && arr[6]==0) ||
-	     (arr[1]==1 && arr[2]==0 && arr[5]==1 && arr[6]==0) ||
-	     (arr[1]==1 && arr[2]==1 && arr[5]==0 && arr[6]==0) ||
-	     (arr[1]==0 && arr[4]==0 && arr[5]==1 && arr[6]==1) ||
-	     (arr[1]==0 && arr[2]==1 && arr[5]==0 && arr[6]==1) ||
-	     (arr[1]==1 && arr[2]==0 && arr[5]==0 && arr[6]==1) ||
-	     (arr[1]==1 && arr[2]==1 && arr[5]==1 && arr[6]==1))
-	  	{ printf("0"); arr[1]=0; }
-	  else
-	  	{ printf("1"); arr[1]=1; }
-	   }
-	   printf("\nE1 parity bit is: ");
-	   
-	   if((arr[0]==0 && arr[2]==0 && arr[4]==0 && arr[6]==0) ||
-	      (arr[0]==0 && arr[2]==1 && arr[4]==1 && arr[6]==0) ||
-	      (arr[0]==1 && arr[2]==0 && arr[4]==1 && arr[6]==0) ||
-	      (arr[0]==1 && arr[2]==1 && arr[4]==0 && arr[6]==0) ||
-	      (arr[0]==0 && arr[4]==0 && arr[4]==1 && arr[6]==1) ||
-	      (arr[0]==0 && arr[2]==1 && arr[4]==0 && arr[6]==1) ||
-	      (arr[0]==1 && arr[2]==0 && arr[4]==0 && arr[6]==1) ||
-	      (arr[0]==1 && arr[2]==1 && arr[4]==1 && arr[6]==1))
-	           { printf("0"); arr[0]=0; }
-	   else
-	           { printf("1"); arr[0]=1; }
-	    
+	do{
+		cout << "\n\nEnter the received message in binary (7 bits): ";
+		cin >> message;
 
+		for(i=0;i<7;i++)
+		{
+			if( ( r_msg[i] = message[i] - 48 ) != 0 && r_msg[i]!=1 ) 	break;
+		}
+	}	while(i<7);
+
+	int E3, E2, E1, E;
+
+	E3 = r_msg[3] ^ r_msg[4] ^ r_msg[5] ^ r_msg[6];
+	E2 = r_msg[1] ^ r_msg[2] ^ r_msg[5] ^ r_msg[6];
+	E1 = r_msg[0] ^ r_msg[2] ^ r_msg[4] ^ r_msg[6];
+
+	if( choice == 2 )
+	{
+		E3 = !E3;
+		E2 = !E2;
+		E1 = !E1;
 	}
 
-	if(choice==2)
+	E = E3*4 + E2*2 + E1;
+
+	if( E == 0 )
 	{
-
-	  printf("\nE3 parity bit is: ");
-	  {
-	  if( (arr[3]==0 && arr[4]==0 && arr[5]==0 && arr[6]==0) ||
-	           (arr[3]==0 && arr[4]==1 && arr[5]==1 && arr[6]==0) ||
-	           (arr[3]==1 && arr[4]==0 && arr[5]==1 && arr[6]==0) ||
-	           (arr[3]==1 && arr[4]==1 && arr[5]==0 && arr[6]==0) ||
-	           (arr[3]==0 && arr[4]==0 && arr[5]==1 && arr[6]==1) ||
-	           (arr[3]==0 && arr[4]==1 && arr[5]==0 && arr[6]==1) ||
-	           (arr[3]==1 && arr[4]==0 && arr[5]==0 && arr[6]==1) ||
-	           (arr[3]==1 && arr[4]==1 && arr[5]==1 && arr[6]==1))
-	    { printf("0"); arr[3]=0; }
-	  else
-	    { printf("1"); arr[3]=1; }
-	  }
-
-	  printf("\nE2 parity bit is: ");
-	  {
-	  if((arr[1]==0 && arr[2]==0 && arr[5]==0 && arr[6]==0) ||
-	     (arr[1]==0 && arr[2]==1 && arr[5]==1 && arr[6]==0) ||
-	     (arr[1]==1 && arr[2]==0 && arr[5]==1 && arr[6]==0) ||
-	     (arr[1]==1 && arr[2]==1 && arr[5]==0 && arr[6]==0) ||
-	     (arr[1]==0 && arr[4]==0 && arr[5]==1 && arr[6]==1) ||
-	     (arr[1]==0 && arr[2]==1 && arr[5]==0 && arr[6]==1) ||
-	     (arr[1]==1 && arr[2]==0 && arr[5]==0 && arr[6]==1) ||
-	     (arr[1]==1 && arr[2]==1 && arr[5]==1 && arr[6]==1))
-	  	{ printf("0"); arr[1]=0; }
-	  else
-	  	{ printf("1"); arr[1]=1; }
-	   }
-
-	   printf("\nE1 parity bit is: ");
-	   
-	   if( (arr[0]==0 && arr[2]==0 && arr[4]==0 && arr[6]==0) ||
-	      (arr[0]==0 && arr[2]==1 && arr[4]==1 && arr[6]==0) ||
-	      (arr[0]==1 && arr[2]==0 && arr[4]==1 && arr[6]==0) ||
-	      (arr[0]==1 && arr[2]==1 && arr[4]==0 && arr[6]==0) ||
-	      (arr[0]==0 && arr[4]==0 && arr[4]==1 && arr[6]==1) ||
-	      (arr[0]==0 && arr[2]==1 && arr[4]==0 && arr[6]==1) ||
-	      (arr[0]==1 && arr[2]==0 && arr[4]==0 && arr[6]==1) ||
-	      (arr[0]==1 && arr[2]==1 && arr[4]==1 && arr[6]==1))
-	           { printf("0"); arr[0]=0; }
-	   else
-	           { printf("1"); arr[0]=1; }
+		cout << "\nThe received message is correct!";
 	}
 
-	
+	else
+	{
+		cout << "\nError at position: " << E--;
+		cout << "\nThe correct message is: ";
 
-printf("\n\nThe error is at position: %d %d %d", arr[3], arr[1], arr[0]);
+		r_msg[E] = ( r_msg[E] )? 0:1;
 
-return 0;
+		for(i=0;i<7;i++)	cout << r_msg[i];
+	}
+
+	return 0;
 }
