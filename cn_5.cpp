@@ -1,33 +1,32 @@
-//Selective repeat sliding window protocol
+/*
+  Selective repeat sliding window protocol
+*/
+
 #include<iostream>
+#include<cstdlib>
+#include<ctime>
+#include<cmath>
 using namespace std;
-//#include<conio.h>
-#include<stdlib.h>
-#include<time.h>
-#include<math.h>
+
 #define TOT_FRAMES 500
 #define FRAMES_SEND 10
 
-
-
 class sel_repeat
 {
-
 private:
-
-        int fr_send_at_instance;
-        int arr[TOT_FRAMES];
-        int send[FRAMES_SEND];
-        int rcvd[FRAMES_SEND];
-        char rcvd_ack[FRAMES_SEND];
-        int sw;
-        int rw;       //tells expected frame
+  int fr_send_at_instance;
+  int arr[TOT_FRAMES];
+  int send[FRAMES_SEND];
+  int rcvd[FRAMES_SEND];
+  char rcvd_ack[FRAMES_SEND];
+  int sw;
+  int rw;       //tells expected frame
 
 public:
 
-        void input();
-        void sender(int);
-        void receiver(int);
+  void input();
+  void sender(int);
+  void receiver(int);
 
 };
 
@@ -254,7 +253,8 @@ else
 
 int main()
 {
-sel_repeat sr;;
-sr.input();
-//ducslectures.blogspot.in
+  sel_repeat sr;;
+  sr.input();
+
+  return 0;
 }
